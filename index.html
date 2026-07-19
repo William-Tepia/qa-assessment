@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tepia · QA Specialist Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#282451;
+    --navy-2:#3A3570;
+    --navy-3:#4C4690;
+    --yellow:#ECC150;
+    --sky:#63D1EA;
+    --orange:#ED894E;
+    --pink:#F383BE;
+    --green:#80C97A;
+    --purple:#8F85DE;
+    --bg:#EFEDF8;            /* light lilac */
+    --bg-deep:#E6E3F4;
+    --panel:#FFFFFF;
+    --border:#DDD9EE;
+    --text:#282451;
+    --muted:#6F6B94;
+    --display:'Bricolage Grotesque','Inter',sans-serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'JetBrains Mono','SF Mono',Consolas,monospace;
+    --shadow:0 2px 6px rgba(40,36,81,.06), 0 12px 32px rgba(40,36,81,.07);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;padding-bottom:90px;}
+  a{color:var(--navy);font-weight:600;text-decoration-color:var(--sky);text-decoration-thickness:2px;text-underline-offset:2px;}
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px;}
+
+  /* ================= HERO ================= */
+  .hero{background:radial-gradient(1200px 600px at 85% -10%, #3A3570 0%, transparent 55%),
+               radial-gradient(900px 500px at -10% 110%, #322D63 0%, transparent 55%),
+               var(--navy);
+        position:relative;overflow:hidden;border-radius:0 0 36px 36px;}
+  .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.30;pointer-events:none;z-index:1;}
+  .accent-shape{position:absolute;pointer-events:none;z-index:1;}
+  .hero-inner{max-width:860px;margin:0 auto;padding:44px 24px 52px 24px;position:relative;z-index:3;}
+  .logo{height:44px;display:block;margin-bottom:34px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25));}
+  .logo-pillbox{display:inline-block;background:#fff;border-radius:16px;padding:8px 14px;margin-bottom:34px;box-shadow:0 4px 16px rgba(0,0,0,.18);}
+  .logo-pillbox img{height:38px;display:block;}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--sky);margin:0 0 12px 0;}
+  h1{font-family:var(--display);font-size:clamp(30px,5vw,44px);font-weight:800;letter-spacing:-0.02em;line-height:1.12;margin:0 0 14px 0;color:#fff;}
+  h1 .hl{color:var(--yellow);}
+  .sub{color:#C9C6E4;font-size:16px;max-width:600px;margin:0;}
+  /* meta chips removed per design direction */
+
+  /* ================= PART MAP ================= */
+  .part-map{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:-30px auto 0 auto;max-width:860px;padding:0 24px;position:relative;z-index:3;}
+  .pm-card{background:var(--panel);border-radius:16px;padding:14px 12px;text-align:center;box-shadow:var(--shadow);border-top:4px solid var(--sky);}
+  .pm-card b{display:block;font-family:var(--display);font-size:13px;font-weight:700;}
+  .pm-card span{font-family:var(--mono);font-size:10.5px;color:var(--muted);}
+  @media(max-width:700px){.part-map{grid-template-columns:repeat(2,1fr);} .pm-card:last-child{grid-column:span 2;}}
+
+  /* ================= SECTIONS ================= */
+  section.block{margin:36px auto;max-width:860px;padding:0 24px;}
+  .section-card{background:var(--panel);border-radius:24px;box-shadow:var(--shadow);padding:34px 36px;position:relative;overflow:hidden;}
+  @media(max-width:640px){.section-card{padding:26px 20px;}}
+  .accent-bar{position:absolute;top:0;left:0;right:0;height:6px;}
+  .part-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:2px;}
+  .part-badge{display:inline-flex;align-items:center;gap:10px;}
+  .badge-shape{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:15px;color:#fff;flex-shrink:0;}
+  .part-name{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  .time-chip{font-family:var(--mono);font-size:11.5px;color:var(--navy);background:var(--bg);border-radius:999px;padding:5px 14px;white-space:nowrap;font-weight:600;}
+  h2{font-family:var(--display);font-size:24px;font-weight:700;letter-spacing:-0.01em;margin:12px 0 6px 0;}
+  h3{font-family:var(--display);font-size:16px;font-weight:700;margin:24px 0 8px 0;}
+  p{color:#4A4670;font-size:14.5px;}
+  .why{font-size:13.5px;color:#6B6390;padding:10px 16px;margin:10px 0 18px 0;background:var(--bg);border-radius:12px;}
+  .why b{color:var(--navy);}
+  .scenario{background:#F0FAFD;border:1.5px solid #C9EBF5;border-radius:14px;padding:16px 20px;margin:16px 0;font-size:14px;color:#2F4460;}
+  .scenario.amber{background:#FFF9EC;border-color:#F2E2B4;color:#5C4A1E;}
+  code{font-family:var(--mono);color:var(--navy);background:var(--bg);padding:1px 7px;border-radius:6px;font-size:.9em;font-weight:500;}
+  pre{background:var(--navy);border-radius:14px;padding:18px 20px;font-family:var(--mono);font-size:12.5px;color:#DDE9F5;overflow-x:auto;white-space:pre-wrap;line-height:1.55;}
+  pre code{background:none;color:inherit;padding:0;}
+  pre .cm{color:#8B96C4;}
+  label.field-label{display:block;font-size:12.5px;color:var(--muted);margin:14px 0 6px 0;font-weight:600;letter-spacing:.02em;}
+  input[type=text], input[type=email], select, textarea{
+    width:100%;background:#FBFAFE;border:1.5px solid var(--border);color:var(--text);
+    border-radius:11px;padding:11px 14px;font-family:var(--sans);font-size:14px;outline:none;
+    transition:border-color .12s, box-shadow .12s;
+  }
+  textarea{font-family:var(--mono);font-size:13px;resize:vertical;}
+  input:focus, select:focus, textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(143,133,222,.18);background:#fff;}
+  .code-area{min-height:170px;}
+  .short-area{min-height:66px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .grid3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;}
+  @media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr;}}
+  .qnum{font-family:var(--mono);color:var(--orange);font-size:12px;font-weight:700;}
+  .note{font-size:12.5px;color:var(--muted);margin-top:6px;}
+  .bonus{background:#FFF6EE;border:1.5px dashed #F0CBAA;border-radius:14px;padding:14px 18px;margin:20px 0 0 0;font-size:13.5px;color:#6B4A33;}
+  .bonus strong{color:var(--orange);}
+
+  /* test case tickets */
+  .ticket{border:1.5px solid var(--border);border-radius:14px;background:#FBFAFE;padding:16px 18px;margin:12px 0;}
+  .ticket-id{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--green);border-radius:7px;padding:3px 9px;}
+  #issue-rows .ticket-id{background:var(--pink);}
+
+  /* ================= CLICKUP-STYLE BUG CARD ================= */
+  .cu-card{border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin:16px 0;background:#fff;box-shadow:0 1px 4px rgba(40,36,81,.06);}
+  .cu-top{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#FAF9FE;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .cu-status{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.06em;color:#fff;background:#87909E;border-radius:6px;padding:4px 10px;}
+  .cu-breadcrumb{font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .cu-body{padding:16px 18px;}
+  .cu-taskname{border:none;background:transparent;font-family:var(--display);font-size:18px;font-weight:700;color:var(--navy);width:100%;padding:6px 4px;border-radius:8px;}
+  .cu-taskname::placeholder{color:#B6B2CF;font-weight:600;}
+  .cu-taskname:focus{background:var(--bg);box-shadow:none;border:none;outline:none;}
+  .cu-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0;}
+  @media(max-width:640px){.cu-fields{grid-template-columns:1fr;}}
+  .cu-field label{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;}
+  .flag{width:11px;height:13px;display:inline-block;}
+  .cu-desc-label{display:flex;gap:14px;border-bottom:1.5px solid var(--border);margin:14px 0 0 0;}
+  .cu-tab{font-size:12.5px;font-weight:600;color:var(--muted);padding:8px 2px;border-bottom:2px solid transparent;}
+  .cu-tab.on{color:var(--purple);border-bottom-color:var(--purple);}
+  .cu-desc{border:none;border-radius:0 0 12px 12px;min-height:170px;background:#fff;padding:14px 4px;}
+  .cu-desc:focus{box-shadow:none;background:#FBFAFE;}
+
+  /* figma link */
+  .figma-link{display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;text-decoration:none;border-radius:999px;padding:13px 24px;font-size:14px;font-weight:700;margin:12px 0;transition:transform .12s, background .12s;}
+  .figma-link:hover{background:var(--navy-2);transform:translateY(-1px);}
+  .figma-link .dot{width:9px;height:9px;border-radius:50%;background:var(--green);}
+
+  /* ================= SUBMIT ================= */
+  .submit-outer{max-width:860px;margin:44px auto 0 auto;padding:0 24px;}
+  .submit-box{background:var(--navy);border-radius:24px;padding:36px;text-align:center;color:#fff;position:relative;overflow:hidden;}
+  .submit-box h2{color:#fff;margin-top:0;}
+  .submit-box p{color:#C9C6E4;max-width:480px;margin:8px auto 20px auto;}
+  button.btn{
+    font-family:var(--display);font-weight:700;font-size:16px;background:var(--yellow);color:var(--navy);
+    border:none;border-radius:999px;padding:15px 42px;cursor:pointer;transition:transform .12s, filter .12s;
+  }
+  button.btn:hover{transform:translateY(-1px);filter:brightness(1.05);}
+  button.btn:disabled{background:#8A87A8;color:#3F3C63;cursor:not-allowed;transform:none;}
+  #submit-status{margin-top:16px;font-size:14px;min-height:20px;font-weight:600;}
+  #submit-status.ok{color:var(--green);}
+  #submit-status.err{color:#FFA8A8;}
+  .foot{max-width:860px;margin:26px auto 0 auto;padding:0 24px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--muted);}
+  /* completion progress */
+  #progress-track{position:fixed;top:0;left:0;right:0;height:4px;background:rgba(40,36,81,.08);z-index:50;}
+  #progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--sky),var(--green));transition:width .35s ease;}
+  #progress-label{position:fixed;top:10px;right:14px;font-family:var(--mono);font-size:10.5px;color:var(--muted);background:rgba(255,255,255,.85);backdrop-filter:blur(4px);border:1px solid var(--border);border-radius:999px;padding:3px 10px;z-index:50;opacity:0;transition:opacity .3s;}
+  #progress-label.show{opacity:1;}
+</style>
+</head>
+<body>
+<div id="progress-track"><div id="progress-fill"></div></div>
+<div id="progress-label">0% complete</div>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <div class="glow" style="width:460px;height:460px;background:#8F85DE;right:-100px;top:-140px;"></div>
+  <div class="glow" style="width:380px;height:380px;background:#63D1EA;right:180px;bottom:-200px;"></div>
+  <svg class="accent-shape" style="right:70px;top:70px;" width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+    <circle cx="60" cy="60" r="56" fill="none" stroke="#ECC150" stroke-width="2" opacity=".55"/>
+    <circle cx="60" cy="60" r="9" fill="#ECC150"/>
+  </svg>
+  <svg class="accent-shape" style="right:150px;bottom:60px;" width="80" height="80" viewBox="0 0 84 84" aria-hidden="true">
+    <path d="M80 80 L80 8 L8 80 Z" fill="none" stroke="#F383BE" stroke-width="2" opacity=".45"/>
+  </svg>
+  <div class="hero-inner">
+    <span class="logo-pillbox"><img src="data:image/png;base64,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" alt="Tepia"></span>
+    <p class="kicker">QA Specialist · Practical Assessment</p>
+    <h1>Show us how you<br>think about <span class="hl">quality.</span></h1>
+    <p class="sub">Five practical tasks that mirror the day-to-day QA work at Tepia. No trivia — we evaluate how you reason.</p>
+  </div>
+</div>
+
+<!-- ================= PART MAP ================= -->
+<div class="part-map">
+  <a href="#p1" style="text-decoration:none;color:inherit;"><div class="pm-card" style="border-top-color:var(--green)"><b>01 · Manual</b><span>~10 min</span></div></a>
+  <a href="#p2" style="text-decoration:none;color:inherit;"><div class="pm-card" style="border-top-color:var(--sky)"><b>02 · Automation</b><span>~10 min</span></div></a>
+  <a href="#p3" style="text-decoration:none;color:inherit;"><div class="pm-card" style="border-top-color:var(--yellow)"><b>03 · API</b><span>~8 min</span></div></a>
+  <a href="#p4" style="text-decoration:none;color:inherit;"><div class="pm-card" style="border-top-color:var(--orange)"><b>04 · Bug report</b><span>~6 min</span></div></a>
+  <a href="#p5" style="text-decoration:none;color:inherit;"><div class="pm-card" style="border-top-color:var(--pink)"><b>05 · Figma</b><span>~10 min</span></div></a>
+</div>
+
+<!-- ================= CANDIDATE ================= -->
+<section class="block">
+  <div class="section-card">
+    <div class="accent-bar" style="background:linear-gradient(90deg,var(--sky),var(--yellow),var(--orange),var(--pink),var(--green),var(--purple));"></div>
+    <div class="part-name">Before you start</div>
+    <div class="grid2">
+      <div>
+        <label class="field-label">Full name *</label>
+        <input type="text" id="cand-name" placeholder="Jane Doe">
+      </div>
+      <div>
+        <label class="field-label">Email *</label>
+        <input type="email" id="cand-email" placeholder="jane@example.com">
+      </div>
+    </div>
+    <label class="field-label">Your QA experience in one line</label>
+    <input type="text" id="cand-exp" placeholder="e.g. 2 years — manual testing on web + mobile, some Selenium">
+  </div>
+</section>
+
+<!-- ================= PART 1 ================= -->
+<section class="block" id="p1">
+  <div class="section-card">
+    <div class="accent-bar" style="background:var(--green)"></div>
+    <div class="part-head">
+      <span class="part-badge">
+        <span class="badge-shape" style="background:var(--green);border-radius:50%;">1</span>
+        <span class="part-name">Manual testing</span>
+      </span>
+      <span class="time-chip">~10 min</span>
+    </div>
+    <h2>Design test cases for a checkout flow</h2>
+    <div class="why"><b>Why this matters at Tepia:</b> most of what you'll verify before a mobile release is manual. Good test design — knowing <i>what</i> to test and <i>why</i> — is the core skill.</div>
+    <div class="scenario">
+      <strong>Setup:</strong> open <a href="https://www.saucedemo.com/" target="_blank" rel="noopener">saucedemo.com</a> and log in with <code>standard_user</code> / <code>secret_sauce</code>. Walk the full flow: products → cart → checkout → finish. Then write the <strong>3 test cases you'd prioritize</strong> for that flow — real steps, explicit expected results, as if a teammate had to run them without you in the room.
+    </div>
+    <div id="testcase-rows"></div>
+
+    <h3><span class="qnum">Q1 ·</span> Beyond the happy path</h3>
+    <p>Name one edge case or negative scenario for checkout that isn't covered above, and why it's worth testing.</p>
+    <textarea id="q-edgecase" class="short-area" placeholder="e.g. what happens if…"></textarea>
+
+    <h3><span class="qnum">Q2 ·</span> Mobile-specific thinking</h3>
+    <p>Now imagine this checkout lives inside an <b>iOS/Android app</b>. Name <b>two</b> scenarios you'd test on mobile that don't exist on desktop web (think interruptions, connectivity, device states…).</p>
+    <textarea id="q-mobile" class="short-area" placeholder="1. …&#10;2. …"></textarea>
+  </div>
+</section>
+
+<!-- ================= PART 2 ================= -->
+<section class="block" id="p2">
+  <div class="section-card">
+    <div class="accent-bar" style="background:var(--sky)"></div>
+    <div class="part-head">
+      <span class="part-badge">
+        <span class="badge-shape" style="background:var(--sky);border-radius:10px;">2</span>
+        <span class="part-name">Automation</span>
+      </span>
+      <span class="time-chip">~10 min</span>
+    </div>
+    <h2>Fix and extend a flaky script</h2>
+    <div class="why"><b>Why this matters at Tepia:</b> you'll work inside existing automation suites (Selenium / Cypress). The most common real-world task isn't building frameworks — it's spotting why a test is flaky and fixing it properly.</div>
+    <p>This Selenium script logs into saucedemo.com and adds one item to the cart. It works… sometimes. It has one classic reliability bug.</p>
+    <pre><code>driver.get("https://www.saucedemo.com/")
+driver.find_element(By.ID, "user-name").send_keys("standard_user")
+driver.find_element(By.ID, "password").send_keys("secret_sauce")
+driver.find_element(By.ID, "login-button").click()
+time.sleep(5)  <span class="cm"># &lt;-- the bug is here</span>
+driver.find_element(By.ID, "add-to-cart-sauce-labs-backpack").click()</code></pre>
+    <div class="scenario amber">
+      <strong>Your task — 3 things:</strong>
+      <ol style="margin:8px 0 0 0;padding-left:20px;">
+        <li>Replace the hard-coded wait with a proper one, and briefly say <i>why</i> yours is better.</li>
+        <li>Add an assertion confirming the cart badge shows <code>1</code>.</li>
+        <li>Add a second, separate check: attempt login as <code>locked_out_user</code> / <code>secret_sauce</code> and assert the error message appears.</li>
+      </ol>
+      Answer in Selenium (any language) or Cypress — whatever you actually use.
+    </div>
+    <label class="field-label">Language / framework</label>
+    <select id="auto-lang">
+      <option>Selenium (Python)</option><option>Selenium (Java)</option>
+      <option>Selenium (JavaScript/TypeScript)</option><option>Cypress</option><option>Other</option>
+    </select>
+    <label class="field-label">Your code (+ the one-line "why" as a comment)</label>
+    <textarea id="auto-code" class="code-area" placeholder="Paste your fixed and extended script here…"></textarea>
+
+    <div class="bonus">
+      <strong>Optional — skip if short on time:</strong> in 1–2 lines, how would you structure this differently in a real project? (Page Objects, fixtures, CI…)
+      <textarea id="bonus-auto" class="short-area" style="margin-top:10px;"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PART 3 ================= -->
+<section class="block" id="p3">
+  <div class="section-card">
+    <div class="accent-bar" style="background:var(--yellow)"></div>
+    <div class="part-head">
+      <span class="part-badge">
+        <span class="badge-shape" style="background:var(--yellow);border-radius:50% 50% 50% 12px;">3</span>
+        <span class="part-name">API testing</span>
+      </span>
+      <span class="time-chip">~8 min</span>
+    </div>
+    <h2>Validate the API behind the app</h2>
+    <div class="why"><b>Why this matters at Tepia:</b> every mobile app we ship talks to a backend. Catching a broken response in Postman is far cheaper than catching it as a blank screen in the app.</div>
+    <div class="scenario">
+      <strong>Setup:</strong> the endpoint <code>GET https://reqres.in/api/users/2</code> returns a JSON user object (<code>data.id</code>, <code>data.email</code>, <code>data.first_name</code>…). Write the checks you'd put in Postman's <strong>Tests</strong> tab to validate it properly — status, structure, and values. Use <code>pm.test(...)</code> syntax, or clear plain language if you haven't used Postman.
+    </div>
+    <textarea id="api-code" class="code-area" placeholder='pm.test("Status code is 200", function () { … });'></textarea>
+
+    <h3><span class="qnum">Q ·</span> Status codes in the wild</h3>
+    <p>Your mobile app sends a request with an <b>expired auth token</b> and gets a response. (a) Which status code should you expect? (b) And what's the difference between <code>200</code> and <code>204</code>?</p>
+    <textarea id="q-status" class="short-area"></textarea>
+  </div>
+</section>
+
+<!-- ================= PART 4 ================= -->
+<section class="block" id="p4">
+  <div class="section-card">
+    <div class="accent-bar" style="background:var(--orange)"></div>
+    <div class="part-head">
+      <span class="part-badge">
+        <span class="badge-shape" style="background:var(--orange);border-radius:10px 10px 2px 10px;">4</span>
+        <span class="part-name">Bug report</span>
+      </span>
+      <span class="time-chip">~6 min</span>
+    </div>
+    <h2>File it like it's Monday morning</h2>
+    <div class="why"><b>Why this matters at Tepia:</b> we run everything in ClickUp. A developer will pick this task up without you in the room — your write-up <i>is</i> the handoff.</div>
+    <div class="scenario">
+      <strong>Setup:</strong> log into saucedemo.com as <code>problem_user</code> / <code>secret_sauce</code> and look closely at the product listing. Something is clearly wrong with the images. File it below exactly as you would a real ClickUp task.
+    </div>
+
+    <!-- ClickUp-style task card -->
+    <div class="cu-card">
+      <div class="cu-top">
+        <span class="cu-status">TO DO</span>
+        <span class="cu-breadcrumb">Tepia Workspace / Client Projects / QA Bugs</span>
+      </div>
+      <div class="cu-body">
+        <input type="text" id="bug-title" class="cu-taskname" placeholder="Task name — make it specific">
+        <div class="cu-fields">
+          <div class="cu-field">
+            <label><svg class="flag" viewBox="0 0 11 13"><path d="M0 0h1.5v13H0zM1.5 0H11L8 3.5 11 7H1.5z" fill="#ED894E"/></svg> Priority</label>
+            <select id="bug-priority"><option>Urgent</option><option selected>High</option><option>Normal</option><option>Low</option></select>
+          </div>
+          <div class="cu-field">
+            <label>⚠ Severity</label>
+            <select id="bug-severity"><option>Blocker</option><option>Major</option><option selected>Minor</option><option>Trivial</option></select>
+          </div>
+          <div class="cu-field">
+            <label>🖥 Environment</label>
+            <input type="text" id="bug-env" placeholder="Browser / OS / URL">
+          </div>
+        </div>
+        <div class="cu-desc-label">
+          <span class="cu-tab on">Description</span>
+          <span class="cu-tab">Comments</span>
+          <span class="cu-tab">Activity</span>
+        </div>
+        <textarea id="bug-desc" class="cu-desc" placeholder="Steps to reproduce:&#10;1.&#10;2.&#10;3.&#10;&#10;Expected result:&#10;&#10;Actual result:&#10;&#10;Notes / impact:"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PART 5 ================= -->
+<section class="block" id="p5">
+  <div class="section-card">
+    <div class="accent-bar" style="background:var(--pink)"></div>
+    <div class="part-head">
+      <span class="part-badge">
+        <span class="badge-shape" style="background:var(--pink);border-radius:50%;">5</span>
+        <span class="part-name">Figma audit</span>
+      </span>
+      <span class="time-chip">~10 min</span>
+    </div>
+    <h2>Audit a mobile checkout screen</h2>
+    <div class="why"><b>Why this matters at Tepia:</b> QA here reviews builds <i>against the design</i>. This isn't a design test — it's the same pixel-level attention you'd apply comparing an app build to its Figma spec before release.</div>
+    <div class="scenario">
+      <strong>Setup:</strong> the Figma file below shows a "Checkout" screen from one of our mobile apps, with several planted defects (spacing, color, typography, accessibility). Click any layer, then read exact values in the right-hand <strong>Inspect panel</strong>: corner radius, fill hex, font size, position. A reference brand-color swatch sits to the right of the screen.
+    </div>
+    <a class="figma-link" href="https://www.figma.com/design/ZbPKJMNJMGFwKi9rmc6Rb6/QA-Specialist-Assessment?node-id=1-2" target="_blank" rel="noopener"><span class="dot"></span> Open the Figma file</a>
+
+    <h3>Issue log — report the 3 clearest defects you find</h3>
+    <div id="issue-rows"></div>
+
+    <h3 style="margin-top:28px;">Precision questions</h3>
+    <p class="note" style="margin-bottom:14px;">These check whether you actually inspected the file — pick the answer that matches what you measured.</p>
+
+    <p><span class="qnum">Q1.</span> What corner radius does the "Promo Code" input use, and is it consistent with the "Delivery Address" input?</p>
+    <select id="fq1">
+      <option value="">— Select an answer —</option>
+      <option>8px — consistent with Delivery Address</option>
+      <option>4px — inconsistent, should be 8px to match Delivery Address</option>
+      <option>10px — inconsistent, should be 8px to match Delivery Address</option>
+      <option>4px — inconsistent, should be 12px to match Delivery Address</option>
+    </select>
+
+    <p><span class="qnum">Q2.</span> What hex color is the "Place Order" button fill, and does it match the reference brand-teal swatch?</p>
+    <select id="fq2">
+      <option value="">— Select an answer —</option>
+      <option>#0F8C78 — matches the brand swatch</option>
+      <option>#17A178 — matches the brand swatch</option>
+      <option>#17A178 — does NOT match the brand swatch (#0F8C78)</option>
+      <option>#0F8C78 — does NOT match the brand swatch (#17A178)</option>
+    </select>
+
+    <p><span class="qnum">Q3.</span> Does the "Apply" button's text pass WCAG AA contrast (4.5:1) against its background?</p>
+    <select id="fq3">
+      <option value="">— Select an answer —</option>
+      <option>Yes — it passes AA comfortably</option>
+      <option>It passes AA but fails AAA</option>
+      <option>No — it fails, the ratio is far below 4.5:1</option>
+      <option>Contrast cannot be verified in Figma</option>
+    </select>
+
+    <p><span class="qnum">Q4.</span> What horizontal padding does the header title use versus the body content below it?</p>
+    <select id="fq4">
+      <option value="">— Select an answer —</option>
+      <option>16px on both — consistent</option>
+      <option>20px on both — consistent</option>
+      <option>20px header vs 16px body — inconsistent</option>
+      <option>24px header vs 16px body — inconsistent</option>
+    </select>
+
+    <h3 style="margin-top:28px;">Figma proficiency</h3>
+    <p class="note" style="margin-bottom:14px;">How you'd actually operate the tool day to day as QA — pick the best answer.</p>
+
+    <p><span class="qnum">F1.</span> Fastest way to measure the exact spacing between two elements on the canvas?</p>
+    <select id="ff1">
+      <option value="">— Select an answer —</option>
+      <option>Zoom in and count pixels visually</option>
+      <option>Select one element, hold Alt/Option and hover the other</option>
+      <option>Take a screenshot and measure it in another app</option>
+      <option>Ask the designer for the spacing values</option>
+    </select>
+
+    <p><span class="qnum">F2.</span> A developer insists the build matches the design, but you disagree. Which Figma feature gives you the exact specs (values, colors, code) to settle it?</p>
+    <select id="ff2">
+      <option value="">— Select an answer —</option>
+      <option>Prototype mode</option>
+      <option>Dev Mode / the Inspect panel</option>
+      <option>The layers panel</option>
+      <option>Export as PNG and compare</option>
+    </select>
+
+    <p><span class="qnum">F3.</span> The design changed since your last test cycle and nobody told you what. How do you find out exactly what changed?</p>
+    <select id="ff3">
+      <option value="">— Select an answer —</option>
+      <option>Compare it manually against your memory</option>
+      <option>Check the file's Version history</option>
+      <option>Duplicate the file and diff the layers panel</option>
+      <option>Re-test the entire screen from scratch</option>
+    </select>
+
+    <p><span class="qnum">F4.</span> You found a defect in the design itself. What's the best way to flag it so the designer sees it in context?</p>
+    <select id="ff4">
+      <option value="">— Select an answer —</option>
+      <option>Leave a Comment (C) pinned directly on the element</option>
+      <option>Send a screenshot over email</option>
+      <option>Edit the design to fix it yourself</option>
+      <option>Describe it verbally in the next meeting</option>
+    </select>
+
+    <p><span class="qnum">F5.</span> You need to verify a screen reuses the design system's approved button, not a detached copy. What do you check?</p>
+    <select id="ff5">
+      <option value="">— Select an answer —</option>
+      <option>Whether it visually looks like the other buttons</option>
+      <option>Whether the layer is a component instance (purple diamond) linked to the library</option>
+      <option>Whether it has the same layer name</option>
+      <option>Whether it exports at the same size</option>
+    </select>
+  </div>
+</section>
+
+<!-- ================= SUBMIT ================= -->
+<div class="submit-outer">
+  <div class="submit-box">
+    <h2>That's it — send it in</h2>
+    <p>Your answers go straight to the Tepia team for review. We'll get back to you by email. Double-check your name and email up top before submitting.</p>
+    <button class="btn" id="submit-btn" type="button">Submit assessment →</button>
+    <div id="submit-status"></div>
+  </div>
+</div>
+<p class="foot">Tepia · HR Department · tepia.co</p>
+
+<script>
+/* CONFIG — grading endpoint (Supabase Edge Function). */
+const GRADING_ENDPOINT = "https://scowfnwoeurjkdqomzqd.supabase.co/functions/v1/grade-assessment";
+
+let tcCount = 0;
+function addTestCaseRow(){
+  tcCount++;
+  const wrap = document.getElementById('testcase-rows');
+  const div = document.createElement('div');
+  div.className = 'ticket';
+  div.innerHTML = `
+    <span class="ticket-id">TC-${String(tcCount).padStart(2,'0')}</span>
+    <div class="grid2" style="margin-top:8px;">
+      <div><label class="field-label">Title</label><input type="text" class="tc-title" placeholder="e.g. Checkout completes with valid data"></div>
+      <div><label class="field-label">Priority</label><select class="tc-priority"><option>High</option><option>Medium</option><option>Low</option></select></div>
+    </div>
+    <label class="field-label">Steps</label><textarea class="tc-steps short-area" placeholder="1. …&#10;2. …&#10;3. …"></textarea>
+    <label class="field-label">Expected result</label><textarea class="tc-expected short-area" placeholder="What should happen, specifically"></textarea>
+  `;
+  wrap.appendChild(div);
+}
+for(let i=0;i<3;i++) addTestCaseRow();
+
+let issueCount = 0;
+function addIssueRow(){
+  issueCount++;
+  const wrap = document.getElementById('issue-rows');
+  const div = document.createElement('div');
+  div.className = 'ticket';
+  div.innerHTML = `
+    <span class="ticket-id">ISSUE-${String(issueCount).padStart(2,'0')}</span>
+    <div class="grid2" style="margin-top:8px;">
+      <div><label class="field-label">Element</label><input type="text" class="issue-el" placeholder="e.g. Promo Code input"></div>
+      <div><label class="field-label">Category</label>
+        <select class="issue-cat">
+          <option>Spacing</option><option>Color</option><option>Typography</option>
+          <option>Accessibility</option><option>Component consistency</option><option>Other</option>
+        </select>
+      </div>
+    </div>
+    <label class="field-label">What's wrong, and what should it be — include exact values</label>
+    <textarea class="issue-desc short-area" placeholder="Describe the defect and the fix, with the values you read in Inspect…"></textarea>
+  `;
+  wrap.appendChild(div);
+}
+for(let i=0;i<3;i++) addIssueRow();
+
+function collectAnswers(){
+  const testCases = [...document.querySelectorAll('#testcase-rows .ticket')].map(t => ({
+    title: t.querySelector('.tc-title').value.trim(),
+    priority: t.querySelector('.tc-priority').value,
+    steps: t.querySelector('.tc-steps').value.trim(),
+    expected: t.querySelector('.tc-expected').value.trim()
+  }));
+  const issues = [...document.querySelectorAll('#issue-rows .ticket')].map(t => ({
+    element: t.querySelector('.issue-el').value.trim(),
+    category: t.querySelector('.issue-cat').value,
+    description: t.querySelector('.issue-desc').value.trim()
+  }));
+  return {
+    candidate: {
+      name: document.getElementById('cand-name').value.trim(),
+      email: document.getElementById('cand-email').value.trim(),
+      experience: document.getElementById('cand-exp').value.trim()
+    },
+    part1_manual: {
+      testCases,
+      edgeCase: document.getElementById('q-edgecase').value.trim(),
+      mobileScenarios: document.getElementById('q-mobile').value.trim()
+    },
+    part2_automation: {
+      framework: document.getElementById('auto-lang').value,
+      code: document.getElementById('auto-code').value.trim(),
+      bonusNotes: document.getElementById('bonus-auto').value.trim()
+    },
+    part3_api: {
+      tests: document.getElementById('api-code').value.trim(),
+      statusCodesAnswer: document.getElementById('q-status').value.trim()
+    },
+    part4_bugReport: {
+      title: document.getElementById('bug-title').value.trim(),
+      priority: document.getElementById('bug-priority').value,
+      severity: document.getElementById('bug-severity').value,
+      environment: document.getElementById('bug-env').value.trim(),
+      description: document.getElementById('bug-desc').value.trim()
+    },
+    part5_figma: {
+      issues,
+      q1_radius: document.getElementById('fq1').value,
+      q2_ctaColor: document.getElementById('fq2').value,
+      q3_contrast: document.getElementById('fq3').value,
+      q4_padding: document.getElementById('fq4').value,
+      figmaProficiency: {
+        f1_measureSpacing: document.getElementById('ff1').value,
+        f2_devMode: document.getElementById('ff2').value,
+        f3_versionHistory: document.getElementById('ff3').value,
+        f4_comments: document.getElementById('ff4').value,
+        f5_componentInstance: document.getElementById('ff5').value
+      }
+    },
+    submittedAt: new Date().toISOString()
+  };
+}
+
+// ---- completion progress ----
+function updateProgress(){
+  const fields = [...document.querySelectorAll('input[type=text], input[type=email], textarea')]
+    .filter(el => el.id !== 'bonus-auto'); // optional field doesn't count
+  const filled = fields.filter(el => el.value.trim().length > 2).length;
+  const pct = fields.length ? Math.round((filled / fields.length) * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  const label = document.getElementById('progress-label');
+  label.textContent = pct + '% complete';
+  label.classList.toggle('show', pct > 0);
+}
+document.addEventListener('input', updateProgress);
+
+document.getElementById('submit-btn').addEventListener('click', async () => {
+  const status = document.getElementById('submit-status');
+  const btn = document.getElementById('submit-btn');
+  const answers = collectAnswers();
+
+  if(!answers.candidate.name || !answers.candidate.email){
+    status.className = 'err';
+    status.textContent = 'Please fill in your name and email at the top before submitting.';
+    document.getElementById('cand-name').scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  const answeredSomething = answers.part2_automation.code || answers.part3_api.tests ||
+    answers.part4_bugReport.description || answers.part1_manual.testCases.some(tc => tc.title);
+  if(!answeredSomething){
+    status.className = 'err';
+    status.textContent = 'Looks like the assessment is empty — please complete the main tasks first.';
+    return;
+  }
+  if(!GRADING_ENDPOINT || GRADING_ENDPOINT.startsWith('__')){
+    status.className = 'err';
+    status.textContent = 'Submission endpoint is not configured yet. Please contact the Tepia team.';
+    return;
+  }
+
+  btn.disabled = true;
+  status.className = '';
+  status.textContent = 'Submitting…';
+  try{
+    const res = await fetch(GRADING_ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(answers)
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    status.className = 'ok';
+    status.textContent = '✓ Submitted! Thanks — the Tepia team will review your answers and get back to you by email.';
+    btn.textContent = 'Submitted ✓';
+  }catch(e){
+    btn.disabled = false;
+    status.className = 'err';
+    status.textContent = 'Something went wrong. Please try again, or email your answers to the Tepia team.';
+  }
+});
+</script>
+</body>
+</html>
